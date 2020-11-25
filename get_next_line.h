@@ -6,7 +6,7 @@
 /*   By: acastelb <acastelb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:16:03 by acastelb          #+#    #+#             */
-/*   Updated: 2020/11/24 16:14:22 by acastelb         ###   ########.fr       */
+/*   Updated: 2020/11/25 09:17:00 by acastelb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 
 int		get_next_line(const int fd, char **line);
-int		ft_bufflen(char	*str);
+int		ft_linelen(char	*str);
 char	*ft_strndup(char *src, int size);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_check_error(int fd, char **str, char **line);

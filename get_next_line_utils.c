@@ -6,7 +6,7 @@
 /*   By: acastelb <acastelb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 15:57:59 by acastelb          #+#    #+#             */
-/*   Updated: 2020/11/24 16:24:07 by acastelb         ###   ########.fr       */
+/*   Updated: 2020/11/25 09:16:38 by acastelb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_strlen(char const *str)
 	return (i);
 }
 
-int		ft_bufflen(char *str)
+int		ft_linelen(char *str)
 {
 	int i;
 

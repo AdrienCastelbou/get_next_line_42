@@ -6,7 +6,7 @@
 /*   By: acastelb <acastelb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:10:32 by acastelb          #+#    #+#             */
-/*   Updated: 2020/11/24 16:37:39 by acastelb         ###   ########.fr       */
+/*   Updated: 2020/11/25 09:28:36 by acastelb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			get_next_line(const int fd, char **line)
 		str = ft_strjoin(tmp, buff);
 		free(tmp);
 	}
-	*line = ft_strndup(str, ft_bufflen(str));
+	*line = ft_strndup(str, ft_linelen(str));
 	if (ft_check_end(str) == 0)
 		return (1);
 	free(str);
