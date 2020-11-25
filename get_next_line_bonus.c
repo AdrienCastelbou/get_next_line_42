@@ -6,7 +6,7 @@
 /*   By: acastelb <acastelb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:10:32 by acastelb          #+#    #+#             */
-/*   Updated: 2020/11/25 14:23:45 by acastelb         ###   ########.fr       */
+/*   Updated: 2020/11/25 18:25:46 by acastelb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,29 @@ static int		ft_check_errors(int fd, char **line, t_list **lst, char *buff)
 	return (1);
 }
 
-static	int		ft_lstclear_and_exit(t_list **lst, int return_value)
+static	int		ft_lstclear_and_exit(t_list **lst, int fd, int return_value)
 {
-	if (!lst || !*lst)
-		return (-1);
-	if ((*lst)->next != NULL)
-		ft_lstclear_and_exit(&((*lst)->next), return_value);
-	free(&(*lst)->content);
-	free(*lst);
-	*lst = NULL;
+	t_list	*current;
+	t_list	*last;
+
+	current = *lst;
+	last = 0;
+	while (current)
+	{
+		if (current->fd == fd)
+		{
+			if (!last)
+				*lst = current->next;
+			else
+				last->next = current->next;
+			if (current->content)
+				free(current->content);
+			free(current);
+			return (return_value);
+		}
+		last = current;
+		current = current->next;
+	}
 	return (return_value);
 }
 
@@ -88,20 +102,19 @@ int				get_next_line(const int fd, char **line)
 	if (ft_check_errors(fd, line, &lst, buff) == -1)
 		return (-1);
 	if ((tmp_lst = ft_search_and_create_fd(lst, fd)) == NULL)
-		return (ft_lstclear_and_exit(&lst, -1));
+		return (ft_lstclear_and_exit(&lst, fd, -1));
 	while (ft_strchr(tmp_lst->content, '\n') == NULL &&
 			(size = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[size] = '\0';
 		tmp = tmp_lst->content;
 		tmp_lst->content = ft_strjoin(tmp, buff);
-		free(tmp);
 	}
 	*line = ft_strndup(tmp_lst->content, ft_linelen(tmp_lst->content));
 	if (ft_strchr(tmp_lst->content, '\n'))
 	{
-		ft_strcpy(tmp_lst->content, ft_strchr(tmp_lst->content + 1, '\n') + 1);
+		ft_strcpy(tmp_lst->content, ft_strchr(tmp_lst->content, '\n') + 1);
 		return (1);
 	}
-	return (ft_lstclear_and_exit(&lst, 0));
+	return (ft_lstclear_and_exit(&lst, fd, 0));
 }
